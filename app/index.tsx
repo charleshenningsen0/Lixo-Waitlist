@@ -1,5 +1,11 @@
+
+import { useRouter } from 'expo-router';
 import React, { FC, useState } from 'react';
-import { ActivityIndicator, Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Alert, Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
+
+
+
+
 
 // The URL for your Google Apps Script
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxwVsnATTM_KXe2yfFptmr2M9ojNjKQkXRhPb8aSSvd1T8o0Cve0YBoyG54FBrPQgYu5g/exec';
@@ -11,7 +17,12 @@ interface ScriptResponse {
   error?: string;
 }
 
-const App: FC = () => {
+type RootStackParamList = {
+  success: undefined;
+};
+
+const WaitlistForm: FC = () => {
+  const router = useRouter()
   // State variables are now typed with TypeScript
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -44,15 +55,21 @@ const App: FC = () => {
         // 4. Use the new form data string as the body
         body: formData,
       });
+      router.push('/SucessScreen');
+      setName('');
+      setEmail('');
+      setInfo('');
+      
 
       // Assuming your script returns JSON, which is more reliable than text
       const data = await response.json() as ScriptResponse;
-  
+      console.log(data.result);
       if (data.result === 'success') {
-        Alert.alert('Success!', 'You have been added to the waitlist. 🎉');
-        setName('');
-        setEmail('');
-        setInfo('');
+        
+        
+        
+        
+        
       } else {
         // Use the error from the script if it exists
         const errorMessage = data.error || 'Something went wrong. Please try again.';
@@ -70,7 +87,8 @@ const App: FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Join Our Waitlist</Text>
+      <Image style={styles.image} source={require('../assets/images/IMG_3501.jpeg')}/>
+      <Text style={styles.title}>Join the Waitlist for Lixo</Text>
       <TextInput
         style={styles.input}
         placeholder="Your Name"
@@ -109,23 +127,32 @@ const App: FC = () => {
   );
 }
 
-export default App;
+export default WaitlistForm;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#050505',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#f5f5f5',
+    
+  },
+  image: {
+    width: 300,
+    height: 300,
+    alignSelf: 'center', // This centers the image horizontally
+    marginBottom: 30, // Adds some space between the image and the title
+    resizeMode: 'contain',
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: '#c0c0c0',
     paddingHorizontal: 15,
     paddingVertical: 12,
     borderRadius: 8,
