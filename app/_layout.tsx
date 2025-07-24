@@ -1,5 +1,7 @@
 import { Stack } from 'expo-router';
+
 import React from 'react';
+
 
 
 // Define the screens and their parameters
@@ -10,10 +12,13 @@ type RootStackParamList = {
 
 
 
+
 export default function RootLayout() {
+
   return (
     <Stack
     screenOptions={{
+      headerShown: true,
       headerStyle: {
         backgroundColor: '#1E1E1E', // Your desired background color
       },
@@ -31,9 +36,19 @@ export default function RootLayout() {
          }}
       />
       <Stack.Screen
-        name="success" // This refers to app/success.tsx
-        options={{ headerShown: false }} // Hide header on the success page
+        name="SucessScreen" // This refers to app/success.tsx
+    
+        options={{ 
+          title: 'Back to Signup',
+          headerShown: true,
+         }} // Hide header on the success page
       />
+
+
+
+
+
+      
     </Stack>
   );
 };

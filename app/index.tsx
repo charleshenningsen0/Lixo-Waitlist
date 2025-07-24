@@ -26,13 +26,13 @@ const WaitlistForm: FC = () => {
   // State variables are now typed with TypeScript
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [info, setInfo] = useState<string>('');
+  // const [info, setInfo] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   // The function is now an async arrow function with no parameters
   const handleSubmit = async (): Promise<void> => {
     // 1. Keep the validation from your original code
-    if (!name || !email || !info) {
+    if (!name || !email) { // || !info
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
@@ -43,7 +43,7 @@ const WaitlistForm: FC = () => {
     // encodeURIComponent is important to safely handle special characters
    
 
-    const formData = `Name=${encodeURIComponent(name)}&Email=${encodeURIComponent(email)}&Info=${encodeURIComponent(info)}`;
+    const formData = `Name=${encodeURIComponent(name)}&Email=${encodeURIComponent(email)}`; //&Info=${encodeURIComponent(info)}
 
     try {
       const response = await fetch(SCRIPT_URL, {
@@ -55,10 +55,10 @@ const WaitlistForm: FC = () => {
         // 4. Use the new form data string as the body
         body: formData,
       });
-      router.push('/SucessScreen');
+      router.push('./SucessScreen');
       setName('');
       setEmail('');
-      setInfo('');
+      // setInfo('');
       
 
       // Assuming your script returns JSON, which is more reliable than text
@@ -88,7 +88,7 @@ const WaitlistForm: FC = () => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/images/IMG_3501.jpeg')}/>
-      <Text style={styles.title}>Join the Waitlist for Lixo</Text>
+      <Text style={styles.title}>Join the Waitlist for Lyntric</Text>
       <TextInput
         style={styles.input}
         placeholder="Your Name"
@@ -106,13 +106,13 @@ const WaitlistForm: FC = () => {
         autoCapitalize="none"
         editable={!loading}
       />
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         placeholder="Who Are You? (e.g., Developer, Founder)"
         value={info}
         onChangeText={setInfo}
         editable={!loading}
-      />
+      /> */}
       
       {/* Show a loading indicator next to the button text when submitting */}
       <View style={styles.buttonContainer}>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#050505',
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
@@ -148,11 +148,12 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     alignSelf: 'center', // This centers the image horizontally
-    marginBottom: 30, // Adds some space between the image and the title
+    marginBottom: 20, // Adds some space between the image and the title
     resizeMode: 'contain',
   },
   input: {
-    backgroundColor: '#c0c0c0',
+    color: '#ffffff',
+    backgroundColor: '#0f0f0f',
     paddingHorizontal: 15,
     paddingVertical: 12,
     borderRadius: 8,
